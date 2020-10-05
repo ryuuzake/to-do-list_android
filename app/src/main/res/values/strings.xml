@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">To Do List</string>
+
+    <string name="search_task">Search Task</string>
+    <string name="task_title">Available Task</string>
+    <string name="blank_text">\u0020</string>
+
+    <string name="task_title_add">Add Task</string>
+    <string name="task_title_edit">Edit Task</string>
+
+    <string name="task_name_hint">Enter task</string>
+    <string name="task_time_hint">Enter date</string>
+
+    <string name="task_add_button">ADD</string>
+    <string name="task_edit_button">EDIT</string>
+    <string name="task_delete_button">DELETE</string>
+</resources>
