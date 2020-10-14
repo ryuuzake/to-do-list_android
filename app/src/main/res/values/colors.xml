@@ -6,4 +6,14 @@
 
     <color name="task_delete">#EF5350</color>
     <color name="task_edit">#FFA726</color>
+
+    <!-- Dark Color -->
+    <color name="darkColorPrimary">#16213E</color>
+    <color name="darkColorPrimaryDark">#1A1A2E</color>
+    <color name="darkColorAccent">#E94560</color>
+    <color name="darkTextColor">#0F3460</color>
+    <color name="darkTextLightColor">#FFFFFF</color>
+    <color name="darkTabColor">#373A40</color>
+    <color name="darkTransparent">#EEEEEE</color>
+    <color name="darkDetail">#686D76</color>
 </resources>
