@@ -1,16 +1,14 @@
-package com.shiroecreative.todolist.module.task;
+package com.shiroecreative.todolist.module.addtask;
 
 import com.shiroecreative.todolist.base.BasePresenter;
 import com.shiroecreative.todolist.base.BaseView;
 
-public interface TaskContract {
+public interface AddTaskContract {
     interface View extends BaseView<Presenter> {
-        void setupAddTask();
-
-        void setupEditTask();
+        void redirectToTaskList();
     }
 
     interface Presenter extends BasePresenter {
-        void setTaskType(String taskType);
+        void saveData(String name, String time);
     }
 }

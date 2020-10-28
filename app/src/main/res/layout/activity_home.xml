@@ -7,7 +7,7 @@
     tools:context=".module.home.HomeActivity">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/task_add_button"
+        android:id="@+id/btn_task_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -19,8 +19,7 @@
         android:clickable="true"
         android:elevation="4dp"
         android:focusable="true"
-        android:src="@drawable/ic_add"
-        android:tint="#000000" />
+        android:src="@drawable/ic_add" />
 
     <EditText
         android:id="@+id/task_search_editText"
@@ -37,7 +36,7 @@
         android:inputType="textShortMessage|textAutoCorrect|text" />
 
     <TextView
-        android:id="@+id/task_title_textView"
+        android:id="@+id/tv_task_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/task_search_editText"
@@ -51,7 +50,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/task_title_textView">
+        android:layout_below="@id/tv_task_title">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,7 +58,7 @@
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/task_recyclerview"
+                android:id="@+id/rv_task"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:overScrollMode="never"

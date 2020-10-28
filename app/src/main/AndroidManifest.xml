@@ -9,14 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/DarkTheme">
-        <activity android:name=".module.home.HomeActivity">
+        <activity android:name=".module.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".module.task.TaskActivity" />
+        <activity android:name=".module.home.HomeActivity" />
+        <activity android:name=".module.addtask.AddTaskActivity" />
+        <activity android:name=".module.edittask.EditTaskActivity" />
     </application>
 
 </manifest>
