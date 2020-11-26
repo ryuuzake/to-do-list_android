@@ -16,3 +16,6 @@ Milestone :
    - Copy Base Component to this project
    - Split project into module
    - Route project between module
+   
+- [x] Add SessionRepository (Repository using SharedPrefs)
+   - [x] Save User in UserSessionRepository
