@@ -30,8 +30,8 @@ public class RecyclerViewAdapterTodoList extends RecyclerView.Adapter<RecyclerVi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.task = taskList.get(position);
-        holder.tvTaskName.setText(holder.task.getName());
-        holder.tvTaskTime.setText(holder.task.getTime());
+        holder.tvTaskName.setText(holder.task.getTitle());
+        holder.tvTaskTime.setText(holder.task.getDescription());
         holder.itemView.setOnClickListener(view -> todoListClickListener.onTaskClick(holder.task));
         holder.cbTask.setOnClickListener(view -> todoListClickListener.onTaskCheckBoxClick(holder.task));
     }

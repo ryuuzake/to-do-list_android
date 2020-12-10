@@ -66,7 +66,7 @@ public class EditTaskFragment extends BaseFragment<EditTaskActivity, EditTaskCon
 
     @Override
     public void showData(Task task) {
-        tietTaskName.setText(task.getName());
-        tietTaskTime.setText(task.getTime());
+        tietTaskName.setText(task.getTitle());
+        tietTaskTime.setText(task.getDescription());
     }
 }

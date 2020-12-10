@@ -5,13 +5,13 @@ import com.shiroecreative.todolist.base.BaseModel;
 public class Task extends BaseModel {
 
     private String id;
-    private String name;
-    private String time;
+    private String title;
+    private String description;
 
-    public Task(String id, String name, String time) {
+    public Task(String id, String title, String description) {
         this.id = id;
-        this.name = name;
-        this.time = time;
+        this.title = title;
+        this.description = description;
     }
 
     public String getId() {
@@ -22,19 +22,19 @@ public class Task extends BaseModel {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getTime() {
-        return time;
+    public String getDescription() {
+        return description;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
