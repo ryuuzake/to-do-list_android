@@ -19,3 +19,6 @@ Milestone :
    
 - [x] Add SessionRepository (Repository using SharedPrefs)
    - [x] Save User in UserSessionRepository
+
+- [x] Add LocalRepository (LocalDataSource using SQLite)
+   - [x] Save Task in Local Database

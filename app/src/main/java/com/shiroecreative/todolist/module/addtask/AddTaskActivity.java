@@ -1,6 +1,7 @@
 package com.shiroecreative.todolist.module.addtask;
 
 import com.shiroecreative.todolist.base.BaseFragmentHolderActivity;
+import com.shiroecreative.todolist.data.source.local.TaskTableHandler;
 
 public class AddTaskActivity extends BaseFragmentHolderActivity {
 
@@ -11,7 +12,7 @@ public class AddTaskActivity extends BaseFragmentHolderActivity {
         initializeView();
 
         addTaskFragment = new AddTaskFragment();
-        AddTaskPresenter presenter = new AddTaskPresenter(addTaskFragment);
+        AddTaskPresenter presenter = new AddTaskPresenter(addTaskFragment, new TaskTableHandler(this));
         addTaskFragment.setPresenter(presenter);
 
         setCurrentFragment(addTaskFragment, true);

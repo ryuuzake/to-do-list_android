@@ -20,12 +20,15 @@ import com.shiroecreative.todolist.module.addtask.AddTaskActivity;
 import com.shiroecreative.todolist.module.edittask.EditTaskActivity;
 import com.shiroecreative.todolist.utils.RecyclerViewAdapterTodoList;
 
+import java.util.List;
+
 import static com.shiroecreative.todolist.utils.Constants.TASK_ID;
 
 public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presenter> implements HomeContract.View {
 
     private FloatingActionButton btnTaskAdd;
     private RecyclerView rvTask;
+    private RecyclerViewAdapterTodoList adapterTodoList;
 
     @Nullable
     @Override
@@ -36,11 +39,9 @@ public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presen
         rvTask = fragmentView.findViewById(R.id.rv_task);
         btnTaskAdd = fragmentView.findViewById(R.id.btn_task_add);
         btnTaskAdd.setOnClickListener(view -> presenter.addTask());
-        RecyclerViewAdapterTodoList adapterTodoList = new RecyclerViewAdapterTodoList();
-        rvTask.setHasFixedSize(true);
+        adapterTodoList = new RecyclerViewAdapterTodoList();
         rvTask.setLayoutManager(new LinearLayoutManager(activity));
         rvTask.setAdapter(adapterTodoList);
-        adapterTodoList.setTaskList(presenter.getTasks());
         adapterTodoList.setTodoListClickListener(new RecyclerViewAdapterTodoList.TodoListClickListener() {
             @Override
             public void onTaskClick(Task task) {
@@ -54,6 +55,7 @@ public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presen
 
             }
         });
+        presenter.getTasks();
 
         setTitle(getResources().getString(R.string.app_name));
 
@@ -61,8 +63,19 @@ public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presen
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        presenter.getTasks();
+    }
+
+    @Override
     public void setPresenter(HomeContract.Presenter presenter) {
         this.presenter = presenter;
+    }
+
+    @Override
+    public void showTasks(List<Task> tasks) {
+        adapterTodoList.setTaskList(tasks);
     }
 
     @Override

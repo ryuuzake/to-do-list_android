@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface HomeContract {
     interface View extends BaseView<Presenter> {
+        void showTasks(List<Task> tasks);
+
         void sendToAddTask();
 
         void sendToEditTask(String id);
@@ -18,6 +20,6 @@ public interface HomeContract {
 
         void editTask(String id);
 
-        List<Task> getTasks();
+        void getTasks();
     }
 }

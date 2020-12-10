@@ -1,16 +1,18 @@
 package com.shiroecreative.todolist.module.home;
 
 import com.shiroecreative.todolist.data.model.Task;
+import com.shiroecreative.todolist.data.source.local.TableHandler;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomePresenter implements HomeContract.Presenter {
 
     private final HomeContract.View view;
+    private final TableHandler handler;
 
-    public HomePresenter(HomeContract.View view) {
+    public HomePresenter(HomeContract.View view, TableHandler handler) {
         this.view = view;
+        this.handler = handler;
     }
 
     @Override
@@ -29,12 +31,10 @@ public class HomePresenter implements HomeContract.Presenter {
     }
 
     @Override
-    public List<Task> getTasks() {
+    public void getTasks() {
         // This should be getting data from DB
-        ArrayList<Task> tasks = new ArrayList<>();
-        tasks.add(new Task("1", "Work on Backend", "Today"));
-        tasks.add(new Task("2", "Testing API", "Tomorrow"));
-
-        return tasks;
+        List<Task> tasks = handler.readAll();
+        // Show data in view
+        view.showTasks(tasks);
     }
 }
