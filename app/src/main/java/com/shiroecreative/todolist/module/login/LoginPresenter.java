@@ -2,8 +2,9 @@ package com.shiroecreative.todolist.module.login;
 
 import com.shiroecreative.todolist.data.model.User;
 import com.shiroecreative.todolist.data.request_response.LoginRequest;
+import com.shiroecreative.todolist.data.request_response.VerifyRequest;
 import com.shiroecreative.todolist.data.source.repository.UserRepository;
-import com.shiroecreative.todolist.utils.RequestResponseListener;
+import com.shiroecreative.todolist.utils.ViewRequestResponseListener;
 
 public class LoginPresenter implements LoginContract.Presenter {
 
@@ -17,28 +18,27 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void performLogin(String email, String pass) {
-        repository.login(new LoginRequest(email, email, pass), new RequestResponseListener<User>() {
+        repository.login(new LoginRequest(email, email, pass), new ViewRequestResponseListener<User>(view) {
             @Override
             public void onSuccess(User user) {
                 view.redirectToHome();
-            }
-
-            @Override
-            public void onEmpty() {
-                view.showError("Empty");
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                view.showError(errorMessage);
             }
         });
     }
 
     @Override
     public void start() {
-        if (repository.getUser() != null) {
-            view.redirectToHome();
+        final User user = repository.getUser();
+        if (user != null && user.getToken() != null) {
+            repository.checkToken(
+                    new VerifyRequest(user.getToken()),
+                    new ViewRequestResponseListener<Boolean>(view) {
+                        @Override
+                        public void onSuccess(Boolean isValid) {
+                            view.redirectToHome();
+                        }
+                    }
+            );
         }
     }
 }
