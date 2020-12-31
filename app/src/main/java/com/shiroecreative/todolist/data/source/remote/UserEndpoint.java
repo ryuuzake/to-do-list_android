@@ -2,6 +2,7 @@ package com.shiroecreative.todolist.data.source.remote;
 
 import com.shiroecreative.todolist.data.request_response.LoginRequest;
 import com.shiroecreative.todolist.data.request_response.LoginResponse;
+import com.shiroecreative.todolist.data.request_response.RegisterGoogleRequest;
 import com.shiroecreative.todolist.data.request_response.RegisterRequest;
 import com.shiroecreative.todolist.data.request_response.VerifyRequest;
 
@@ -21,4 +22,7 @@ public interface UserEndpoint {
 
     @POST(USER_ENDPOINT + "/verify/")
     Call<ResponseBody> verifyToken(@Body VerifyRequest verifyRequest);
+
+    @POST(USER_ENDPOINT + "/google/")
+    Call<LoginResponse> registerGoogleAccount(@Body RegisterGoogleRequest registerGoogleRequest);
 }

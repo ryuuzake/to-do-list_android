@@ -1,17 +1,16 @@
 package com.shiroecreative.todolist.data.source.repository;
 
+import android.content.Intent;
+
 import com.shiroecreative.todolist.data.model.User;
-import com.shiroecreative.todolist.data.request_response.LoginRequest;
-import com.shiroecreative.todolist.data.request_response.RegisterRequest;
-import com.shiroecreative.todolist.data.request_response.VerifyRequest;
+import com.shiroecreative.todolist.data.source.remote.UserRemoteRepository;
 import com.shiroecreative.todolist.utils.RequestResponseListener;
 
-public interface UserRepository {
-    void register(RegisterRequest registerRequest, RequestResponseListener<User> listener);
-
-    void login(LoginRequest loginRequest, RequestResponseListener<User> listener);
+public interface UserRepository extends UserRemoteRepository {
 
     User getUser();
 
-    void checkToken(VerifyRequest verifyRequest, RequestResponseListener<Boolean> listener);
+    Intent getGoogleSignInIntent();
+
+    void handleSignInResult(Intent intent, RequestResponseListener<User> listener);
 }

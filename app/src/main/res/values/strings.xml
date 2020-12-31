@@ -20,4 +20,6 @@
     <string name="task_add_button">ADD</string>
     <string name="task_edit_button">EDIT</string>
     <string name="task_delete_button">DELETE</string>
+
+    <string name="server_client_id">876061370062-bpcj417v35d97er85g05hscnt88ebt7a.apps.googleusercontent.com</string>
 </resources>

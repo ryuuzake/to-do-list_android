@@ -1,5 +1,7 @@
 package com.shiroecreative.todolist.module.login;
 
+import android.content.Intent;
+
 import com.shiroecreative.todolist.data.model.User;
 import com.shiroecreative.todolist.data.request_response.LoginRequest;
 import com.shiroecreative.todolist.data.request_response.VerifyRequest;
@@ -19,6 +21,21 @@ public class LoginPresenter implements LoginContract.Presenter {
     @Override
     public void performLogin(String email, String pass) {
         repository.login(new LoginRequest(email, email, pass), new ViewRequestResponseListener<User>(view) {
+            @Override
+            public void onSuccess(User user) {
+                view.redirectToHome();
+            }
+        });
+    }
+
+    @Override
+    public Intent getSignInIntent() {
+        return repository.getGoogleSignInIntent();
+    }
+
+    @Override
+    public void handleSignInResult(Intent intent) {
+        repository.handleSignInResult(intent, new ViewRequestResponseListener<User>(view) {
             @Override
             public void onSuccess(User user) {
                 view.redirectToHome();
