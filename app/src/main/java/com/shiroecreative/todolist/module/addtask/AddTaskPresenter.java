@@ -1,16 +1,17 @@
 package com.shiroecreative.todolist.module.addtask;
 
 import com.shiroecreative.todolist.data.model.Task;
-import com.shiroecreative.todolist.data.source.local.TableHandler;
+import com.shiroecreative.todolist.data.source.repository.TaskRepository;
+import com.shiroecreative.todolist.utils.ViewRequestResponseListener;
 
 public class AddTaskPresenter implements AddTaskContract.Presenter {
 
     private final AddTaskContract.View view;
-    private final TableHandler handler;
+    private final TaskRepository repository;
 
-    public AddTaskPresenter(AddTaskContract.View view, TableHandler handler) {
+    public AddTaskPresenter(AddTaskContract.View view, TaskRepository repository) {
         this.view = view;
-        this.handler = handler;
+        this.repository = repository;
     }
 
     @Override
@@ -18,10 +19,13 @@ public class AddTaskPresenter implements AddTaskContract.Presenter {
     }
 
     @Override
-    public void saveData(String name, String time) {
-        Task task = new Task("3", name, time);
+    public void saveData(Task task) {
         // Save new task
-        handler.create(task);
-        view.redirectToTaskList();
+        repository.createTask(task, new ViewRequestResponseListener<Task>(view) {
+            @Override
+            public void onSuccess(Task task) {
+                view.redirectToTaskList();
+            }
+        });
     }
 }

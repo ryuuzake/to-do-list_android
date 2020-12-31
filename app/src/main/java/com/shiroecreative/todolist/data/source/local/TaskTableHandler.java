@@ -7,13 +7,15 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.shiroecreative.todolist.data.model.Task;
 
-import java.util.ArrayList;
+import org.jetbrains.annotations.NotNull;
 
-public class TaskTableHandler implements TableHandler<Task> {
-    DatabaseHelper dbHelper;
+import java.util.ArrayList;
+import java.util.List;
+
+public class TaskTableHandler extends TableHandler<Task> {
 
     public TaskTableHandler(Context context) {
-        dbHelper = new DatabaseHelper(context);
+        super(context);
     }
 
     @Override
@@ -21,11 +23,9 @@ public class TaskTableHandler implements TableHandler<Task> {
         // Gets the data repository in write mode
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(DatabaseContract.TaskEntry.COLUMN_TITLE, task.getTitle());
-        values.put(DatabaseContract.TaskEntry.COLUMN_DESCRIPTION, task.getDescription());
+        ContentValues values = prepareTask(task);
 
-        long newRowId = db.insert(DatabaseContract.TaskEntry.TABLE_NAME, null, values);
+        db.insert(DatabaseContract.TaskEntry.TABLE_NAME, null, values);
     }
 
     @Override
@@ -37,7 +37,9 @@ public class TaskTableHandler implements TableHandler<Task> {
         String[] projection = {
                 DatabaseContract.TaskEntry._ID,
                 DatabaseContract.TaskEntry.COLUMN_TITLE,
-                DatabaseContract.TaskEntry.COLUMN_DESCRIPTION
+                DatabaseContract.TaskEntry.COLUMN_DESCRIPTION,
+                DatabaseContract.TaskEntry.COLUMN_DATE,
+                DatabaseContract.TaskEntry.COLUMN_CHECKED
         };
 
         // Filter results WHERE "id" = id
@@ -46,7 +48,7 @@ public class TaskTableHandler implements TableHandler<Task> {
 
         // How you want the results sorted in the resulting Cursor
         String sortOrder =
-                DatabaseContract.TaskEntry.COLUMN_TITLE + " DESC";
+                DatabaseContract.TaskEntry.COLUMN_DATE + " DESC";
 
         Cursor cursor = db.query(
                 DatabaseContract.TaskEntry.TABLE_NAME,   // The table to query
@@ -58,34 +60,26 @@ public class TaskTableHandler implements TableHandler<Task> {
                 sortOrder                               // The sort order
         );
 
-        if (cursor != null)
+        if (cursor != null) {
             cursor.moveToFirst();
-
-        Task task = new Task(
-                cursor.getLong(
-                        cursor.getColumnIndexOrThrow(DatabaseContract.TaskEntry._ID)) + "",
-                cursor.getString(1),//title
-                cursor.getString(2));//description
-
-        return task;
+            return getTask(cursor);
+        }
+        return null;
     }
 
     @Override
-    public ArrayList<Task> readAll() {
-        ArrayList<Task> taskList = new ArrayList<Task>();
+    public List<Task> readAll() {
+        List<Task> taskList = new ArrayList<>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + DatabaseContract.TaskEntry.TABLE_NAME;
+        String selectQuery = "SELECT  * FROM " + DatabaseContract.TaskEntry.TABLE_NAME
+                + " ORDER BY " + DatabaseContract.TaskEntry.COLUMN_DATE + " DESC";
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
             do {
-                Task task = new Task(
-                        cursor.getLong(
-                                cursor.getColumnIndexOrThrow(DatabaseContract.TaskEntry._ID)) + "",
-                        cursor.getString(1),//title
-                        cursor.getString(2));//description
+                Task task = getTask(cursor);
 
                 taskList.add(task);
             } while (cursor.moveToNext());
@@ -99,10 +93,7 @@ public class TaskTableHandler implements TableHandler<Task> {
     public void update(Task task) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        // set New value
-        ContentValues values = new ContentValues();
-        values.put(DatabaseContract.TaskEntry.COLUMN_TITLE, task.getTitle());
-        values.put(DatabaseContract.TaskEntry.COLUMN_DESCRIPTION, task.getDescription());
+        ContentValues values = prepareTask(task);
 
         // Which row to update, based on the title
         String selection = DatabaseContract.TaskEntry._ID + " LIKE ?";
@@ -124,6 +115,28 @@ public class TaskTableHandler implements TableHandler<Task> {
         String[] selectionArgs = {task.getId()};
         // Issue SQL statement.
         int deletedRows = db.delete(DatabaseContract.TaskEntry.TABLE_NAME, selection, selectionArgs);
+    }
+
+    @NotNull
+    private Task getTask(Cursor cursor) {
+        return new Task(
+                cursor.getLong(
+                        cursor.getColumnIndexOrThrow(DatabaseContract.TaskEntry._ID)) + "",
+                cursor.getString(1),//title
+                cursor.getString(2),//description
+                cursor.getString(3),//date
+                (cursor.getInt(4) == 1));
+    }
+
+    @NotNull
+    private ContentValues prepareTask(Task task) {
+        // Setup data to add to database
+        ContentValues values = new ContentValues();
+        values.put(DatabaseContract.TaskEntry.COLUMN_TITLE, task.getTitle());
+        values.put(DatabaseContract.TaskEntry.COLUMN_DESCRIPTION, task.getDescription());
+        values.put(DatabaseContract.TaskEntry.COLUMN_DATE, task.getDate());
+        values.put(DatabaseContract.TaskEntry.COLUMN_CHECKED, task.getChecked() ? 1 : 0);
+        return values;
     }
 
 }

@@ -3,6 +3,7 @@ package com.shiroecreative.todolist.data.source.repository;
 import com.shiroecreative.todolist.data.model.User;
 import com.shiroecreative.todolist.data.request_response.LoginRequest;
 import com.shiroecreative.todolist.data.request_response.RegisterRequest;
+import com.shiroecreative.todolist.data.request_response.VerifyRequest;
 import com.shiroecreative.todolist.data.source.remote.UserRemoteRepository;
 import com.shiroecreative.todolist.data.source.session.UserSessionRepository;
 import com.shiroecreative.todolist.utils.RequestResponseListener;
@@ -53,5 +54,10 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User getUser() {
         return sessionRepository.getSessionData();
+    }
+
+    @Override
+    public void checkToken(VerifyRequest verifyRequest, RequestResponseListener<Boolean> listener) {
+        remoteRepository.checkToken(verifyRequest, listener);
     }
 }

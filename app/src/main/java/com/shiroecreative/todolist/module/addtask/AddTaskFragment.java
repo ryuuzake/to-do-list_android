@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import com.google.android.material.textfield.TextInputEditText;
 import com.shiroecreative.todolist.R;
 import com.shiroecreative.todolist.base.BaseFragment;
+import com.shiroecreative.todolist.data.model.Task;
 
 public class AddTaskFragment extends BaseFragment<AddTaskActivity, AddTaskContract.Presenter> implements AddTaskContract.View {
 
@@ -42,7 +43,7 @@ public class AddTaskFragment extends BaseFragment<AddTaskActivity, AddTaskContra
     private void onClickSave() {
         String name = tietTaskName.getText().toString();
         String time = tietTaskTime.getText().toString();
-        presenter.saveData(name, time);
+        presenter.saveData(new Task(null, name, time));
     }
 
     @Override

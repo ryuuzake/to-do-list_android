@@ -1,15 +1,23 @@
 package com.shiroecreative.todolist.data.source.local;
 
+import android.content.Context;
+
 import java.util.List;
 
-public interface TableHandler<T> {
-    void create(T t);
+public abstract class TableHandler<T> {
+    protected DatabaseHelper dbHelper;
 
-    T readById(String id);
+    public TableHandler(Context context) {
+        dbHelper = new DatabaseHelper(context);
+    }
 
-    List<T> readAll();
+    abstract void create(T t);
 
-    void update(T t);
+    abstract T readById(String id);
 
-    void delete(T t);
+    abstract List<T> readAll();
+
+    abstract void update(T t);
+
+    abstract void delete(T t);
 }

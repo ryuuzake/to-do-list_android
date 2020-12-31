@@ -1,8 +1,6 @@
 package com.shiroecreative.todolist.utils;
 
-import com.shiroecreative.todolist.base.BaseModel;
-
-public interface RequestResponseListener<U extends BaseModel> {
+public interface RequestResponseListener<U> {
     void onSuccess(U u);
 
     void onEmpty();

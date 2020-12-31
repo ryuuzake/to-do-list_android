@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,7 +14,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.shiroecreative.todolist.R;
 
-public abstract class BaseFragment<T extends FragmentActivity, U extends BasePresenter> extends Fragment {
+public abstract class BaseFragment<T extends FragmentActivity, U extends BasePresenter> extends Fragment implements BaseView<U> {
 
     protected String title;
     protected T activity;
@@ -45,5 +46,10 @@ public abstract class BaseFragment<T extends FragmentActivity, U extends BasePre
     protected void setTitle(String title) {
         this.title = title;
         fragmentListener.setTitle(title);
+    }
+
+    @Override
+    public void showError(String errorMessage) {
+        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
     }
 }

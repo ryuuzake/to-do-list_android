@@ -7,12 +7,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "FeedReader.db";
+    public static final String DATABASE_NAME = "todolist_android.db";
     private static final String SQL_CREATE_TASK =
             "CREATE TABLE " + DatabaseContract.TaskEntry.TABLE_NAME + " (" +
                     DatabaseContract.TaskEntry._ID + " INTEGER PRIMARY KEY," +
                     DatabaseContract.TaskEntry.COLUMN_TITLE + " TEXT," +
-                    DatabaseContract.TaskEntry.COLUMN_DESCRIPTION + " TEXT)";
+                    DatabaseContract.TaskEntry.COLUMN_DESCRIPTION + " TEXT," +
+                    DatabaseContract.TaskEntry.COLUMN_DATE + " TEXT," +
+                    DatabaseContract.TaskEntry.COLUMN_CHECKED + " INTEGER)";
 
     private static final String SQL_DELETE_TASK =
             "DROP TABLE IF EXISTS " + DatabaseContract.TaskEntry.TABLE_NAME;
