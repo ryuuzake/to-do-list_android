@@ -7,6 +7,9 @@ public class User extends BaseModel {
     private String password;
     private String token;
 
+    public User() {
+    }
+
     public User(String email, String password) {
         this.email = email;
         this.password = password;

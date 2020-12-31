@@ -3,6 +3,9 @@ package com.shiroecreative.todolist.module.login;
 import android.view.View;
 
 import com.shiroecreative.todolist.base.BaseFragmentHolderActivity;
+import com.shiroecreative.todolist.data.source.remote.UserEndpoint;
+import com.shiroecreative.todolist.data.source.remote.UserRemoteRepository;
+import com.shiroecreative.todolist.data.source.repository.UserRepositoryImpl;
 import com.shiroecreative.todolist.data.source.session.UserSessionRepository;
 
 public class LoginActivity extends BaseFragmentHolderActivity {
@@ -16,8 +19,13 @@ public class LoginActivity extends BaseFragmentHolderActivity {
         btnBack.setVisibility(View.GONE);
 
         loginFragment = new LoginFragment();
-        LoginPresenter presenter = new LoginPresenter(loginFragment, new UserSessionRepository(this));
-        loginFragment.setPresenter(presenter);
+        loginFragment.setPresenter(new LoginPresenter(
+                loginFragment,
+                new UserRepositoryImpl(
+                        new UserSessionRepository(this),
+                        new UserRemoteRepository(UserEndpoint.class)
+                )
+        ));
         setCurrentFragment(loginFragment, false);
     }
 }
