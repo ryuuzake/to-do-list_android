@@ -2,9 +2,12 @@ package com.shiroecreative.todolist.module.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +30,7 @@ import static com.shiroecreative.todolist.utils.Constants.TASK_ID;
 public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presenter> implements HomeContract.View {
 
     private FloatingActionButton btnTaskAdd;
+    private EditText etSearch;
     private RecyclerView rvTask;
     private RecyclerViewAdapterTodoList adapterTodoList;
 
@@ -36,9 +40,39 @@ public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presen
         super.onCreateView(inflater, container, savedInstanceState);
         fragmentView = inflater.inflate(R.layout.activity_home, container, false);
 
-        rvTask = fragmentView.findViewById(R.id.rv_task);
         btnTaskAdd = fragmentView.findViewById(R.id.btn_task_add);
         btnTaskAdd.setOnClickListener(view -> presenter.addTask());
+        createRecyclerView();
+        createSearchBar();
+        presenter.getTasks();
+
+        setTitle(getResources().getString(R.string.app_name));
+
+        return fragmentView;
+    }
+
+    private void createSearchBar() {
+        etSearch = fragmentView.findViewById(R.id.task_search_editText);
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                adapterTodoList.getFilter().filter(editable.toString());
+            }
+        });
+    }
+
+    private void createRecyclerView() {
+        rvTask = fragmentView.findViewById(R.id.rv_task);
         adapterTodoList = new RecyclerViewAdapterTodoList();
         rvTask.setLayoutManager(new LinearLayoutManager(activity));
         rvTask.setAdapter(adapterTodoList);
@@ -67,11 +101,6 @@ public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presen
                 return true;
             }
         });
-        presenter.getTasks();
-
-        setTitle(getResources().getString(R.string.app_name));
-
-        return fragmentView;
     }
 
     @Override
