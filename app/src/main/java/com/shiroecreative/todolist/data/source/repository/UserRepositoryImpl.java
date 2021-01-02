@@ -88,7 +88,7 @@ public class UserRepositoryImpl implements UserRepository {
         googleRepository.handleSignInResult(intent, new RequestResponseListener<GoogleSignInAccount>() {
             @Override
             public void onSuccess(GoogleSignInAccount googleSignInAccount) {
-                remoteRepository.registerGoogleAccount(new RegisterGoogleRequest(googleSignInAccount.getIdToken()), getRemoteListener(listener));
+                remoteRepository.registerGoogleAccount(new RegisterGoogleRequest(googleSignInAccount.getServerAuthCode()), getRemoteListener(listener));
             }
 
             @Override

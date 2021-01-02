@@ -4,19 +4,19 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class RegisterGoogleRequest {
-    @SerializedName("access_token")
+    @SerializedName("code")
     @Expose
-    private String accessToken;
+    private String code;
 
-    public RegisterGoogleRequest(String accessToken) {
-        this.accessToken = accessToken;
+    public RegisterGoogleRequest(String code) {
+        this.code = code;
     }
 
-    public String getAccessToken() {
-        return accessToken;
+    public String getCode() {
+        return code;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public void setCode(String code) {
+        this.code = code;
     }
 }
