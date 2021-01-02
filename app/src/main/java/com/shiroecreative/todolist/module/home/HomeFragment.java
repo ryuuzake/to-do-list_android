@@ -11,10 +11,11 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.shiroecreative.todolist.R;
 import com.shiroecreative.todolist.base.BaseFragment;
 import com.shiroecreative.todolist.data.model.Task;
@@ -23,6 +24,7 @@ import com.shiroecreative.todolist.module.edittask.EditTaskActivity;
 import com.shiroecreative.todolist.module.login.LoginActivity;
 import com.shiroecreative.todolist.utils.RecyclerViewAdapterTodoList;
 import com.shiroecreative.todolist.utils.TaskUtil;
+import com.shiroecreative.todolist.utils.ViewPagerAdapterTask;
 
 import java.util.List;
 
@@ -30,31 +32,58 @@ import static com.shiroecreative.todolist.utils.Constants.TASK_ID;
 
 public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presenter> implements HomeContract.View {
 
-    private FloatingActionButton btnTaskAdd;
-    private EditText etSearch;
-    private RecyclerView rvTask;
-    private RecyclerViewAdapterTodoList adapterTodoList;
+    private RecyclerViewAdapterTodoList[] adapterTodoList;
+    private int viewPagerPosition = 0;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         fragmentView = inflater.inflate(R.layout.activity_home, container, false);
-
-        btnTaskAdd = fragmentView.findViewById(R.id.btn_task_add);
-        btnTaskAdd.setOnClickListener(view -> presenter.addTask());
-        activity.btnLogout.setOnClickListener(v -> presenter.logout());
-        createRecyclerView();
-        createSearchBar();
-        presenter.getTasks();
-
-        setTitle(getResources().getString(R.string.app_name));
-
         return fragmentView;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        FloatingActionButton btnTaskAdd = fragmentView.findViewById(R.id.btn_task_add);
+        btnTaskAdd.setOnClickListener(v -> presenter.addTask());
+        activity.btnLogout.setOnClickListener(v -> presenter.logout());
+        adapterTodoList = new RecyclerViewAdapterTodoList[]{
+                new RecyclerViewAdapterTodoList(),
+                new RecyclerViewAdapterTodoList()
+        };
+        createSearchBar();
+        createViewPager();
+        presenter.getTasks();
+
+        setTitle(getResources().getString(R.string.app_name));
+    }
+
+    private void createViewPager() {
+        ViewPager2 viewPager = fragmentView.findViewById(R.id.pager);
+        TabLayout tabLayout = fragmentView.findViewById(R.id.tab_layout);
+
+        final ViewPagerAdapterTask viewPagerAdapterTask = new ViewPagerAdapterTask(this);
+        viewPagerAdapterTask.setAdapterTodoList(adapterTodoList);
+        viewPagerAdapterTask.setPresenter(presenter);
+
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                viewPagerPosition = position;
+            }
+        });
+        viewPager.setAdapter(viewPagerAdapterTask);
+
+        String[] tabTitles = activity.getResources().getStringArray(R.array.tab_titles);
+        new TabLayoutMediator(tabLayout, viewPager,
+                (tab, position) -> tab.setText(tabTitles[position])
+        ).attach();
+    }
+
     private void createSearchBar() {
-        etSearch = fragmentView.findViewById(R.id.task_search_editText);
+        EditText etSearch = fragmentView.findViewById(R.id.task_search_editText);
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -68,39 +97,7 @@ public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presen
 
             @Override
             public void afterTextChanged(Editable editable) {
-                adapterTodoList.getFilter().filter(editable.toString());
-            }
-        });
-    }
-
-    private void createRecyclerView() {
-        rvTask = fragmentView.findViewById(R.id.rv_task);
-        adapterTodoList = new RecyclerViewAdapterTodoList();
-        rvTask.setLayoutManager(new LinearLayoutManager(activity));
-        rvTask.setAdapter(adapterTodoList);
-        adapterTodoList.setTodoListClickListener(new RecyclerViewAdapterTodoList.TodoListClickListener() {
-            @Override
-            public void onTaskClick(Task task) {
-                String id = task.getId();
-                presenter.editTask(id);
-            }
-
-            @Override
-            public void onTaskCheckBoxClick(Task task) {
-                presenter.checkedTask(task);
-            }
-
-            @Override
-            public boolean onTaskLongClick(Task task) {
-                final String sharedText = TaskUtil.processForSharing(task);
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, sharedText);
-                sendIntent.setType("text/plain");
-
-                Intent shareIntent = Intent.createChooser(sendIntent, null);
-                startActivity(shareIntent);
-                return true;
+                adapterTodoList[viewPagerPosition].getFilter().filter(editable.toString());
             }
         });
     }
@@ -118,7 +115,9 @@ public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presen
 
     @Override
     public void showTasks(List<Task> tasks) {
-        adapterTodoList.setTaskList(tasks);
+        // Hardcode setTaskList
+        adapterTodoList[0].setTaskList(TaskUtil.filterAvailable(tasks));
+        adapterTodoList[1].setTaskList(TaskUtil.filterCompleted(tasks));
     }
 
     @Override

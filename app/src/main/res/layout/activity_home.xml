@@ -35,37 +35,16 @@
         android:hint="@string/search_task"
         android:inputType="textShortMessage|textAutoCorrect|text" />
 
-    <TextView
-        android:id="@+id/tv_task_title"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/task_search_editText"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/task_title"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textStyle="bold" />
+        android:layout_below="@id/task_search_editText" />
 
-    <ScrollView
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tv_task_title">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_task"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:overScrollMode="never"
-                android:padding="8dp"
-                tools:itemCount="10"
-                tools:listitem="@layout/task_layout" />
-        </LinearLayout>
-    </ScrollView>
+        android:layout_below="@id/tab_layout" />
 
 </RelativeLayout>
