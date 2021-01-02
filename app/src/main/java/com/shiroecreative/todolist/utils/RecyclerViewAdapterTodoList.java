@@ -34,6 +34,7 @@ public class RecyclerViewAdapterTodoList extends RecyclerView.Adapter<RecyclerVi
         holder.tvTaskTime.setText(holder.task.getDescription());
         holder.itemView.setOnClickListener(view -> todoListClickListener.onTaskClick(holder.task));
         holder.cbTask.setOnClickListener(view -> todoListClickListener.onTaskCheckBoxClick(holder.task));
+        holder.itemView.setOnLongClickListener(view -> todoListClickListener.onTaskLongClick(holder.task));
     }
 
     @Override
@@ -54,6 +55,8 @@ public class RecyclerViewAdapterTodoList extends RecyclerView.Adapter<RecyclerVi
         void onTaskClick(Task task);
 
         void onTaskCheckBoxClick(Task task);
+
+        boolean onTaskLongClick(Task task);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

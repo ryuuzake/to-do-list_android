@@ -2,7 +2,6 @@ package com.shiroecreative.todolist.module.home;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,7 @@ import com.shiroecreative.todolist.data.model.Task;
 import com.shiroecreative.todolist.module.addtask.AddTaskActivity;
 import com.shiroecreative.todolist.module.edittask.EditTaskActivity;
 import com.shiroecreative.todolist.utils.RecyclerViewAdapterTodoList;
+import com.shiroecreative.todolist.utils.TaskUtil;
 
 import java.util.List;
 
@@ -46,13 +46,25 @@ public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presen
             @Override
             public void onTaskClick(Task task) {
                 String id = task.getId();
-                Log.d("BELAJAR ACTIVITY", "asd" + id);
                 presenter.editTask(id);
             }
 
             @Override
             public void onTaskCheckBoxClick(Task task) {
 
+            }
+
+            @Override
+            public boolean onTaskLongClick(Task task) {
+                final String sharedText = TaskUtil.processForSharing(task);
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, sharedText);
+                sendIntent.setType("text/plain");
+
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                startActivity(shareIntent);
+                return true;
             }
         });
         presenter.getTasks();
