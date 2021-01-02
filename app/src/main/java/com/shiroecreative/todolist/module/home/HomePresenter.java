@@ -43,4 +43,16 @@ public class HomePresenter implements HomeContract.Presenter {
         });
 
     }
+
+    @Override
+    public void checkedTask(Task task) {
+        task.setChecked(!task.getChecked());
+        repository.updateTask(task, new ViewRequestResponseListener<Task>(view) {
+            @Override
+            public void onSuccess(Task task) {
+                // Refresh List
+                getTasks();
+            }
+        });
+    }
 }

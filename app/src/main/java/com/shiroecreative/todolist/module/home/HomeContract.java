@@ -21,5 +21,7 @@ public interface HomeContract {
         void editTask(String id);
 
         void getTasks();
+
+        void checkedTask(Task task);
     }
 }

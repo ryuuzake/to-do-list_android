@@ -51,7 +51,7 @@ public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presen
 
             @Override
             public void onTaskCheckBoxClick(Task task) {
-
+                presenter.checkedTask(task);
             }
 
             @Override
