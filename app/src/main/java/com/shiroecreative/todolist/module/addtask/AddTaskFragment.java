@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,7 +19,9 @@ import com.shiroecreative.todolist.data.model.Task;
 public class AddTaskFragment extends BaseFragment<AddTaskActivity, AddTaskContract.Presenter> implements AddTaskContract.View {
 
     TextInputEditText tietTaskName;
-    TextInputEditText tietTaskTime;
+    TextInputEditText tietTaskDescription;
+    private TextInputEditText tietTaskDate;
+    private CheckBox cbChecked;
 
     @Nullable
     @Override
@@ -30,7 +33,9 @@ public class AddTaskFragment extends BaseFragment<AddTaskActivity, AddTaskContra
         final TextView taskTitle = fragmentView.findViewById(R.id.tv_task_title);
         final Button btnTaskAdd = fragmentView.findViewById(R.id.btn_task_add);
         tietTaskName = fragmentView.findViewById(R.id.tiet_task_name);
-        tietTaskTime = fragmentView.findViewById(R.id.tiet_task_time);
+        tietTaskDescription = fragmentView.findViewById(R.id.tiet_task_description);
+        tietTaskDate = fragmentView.findViewById(R.id.tiet_task_date);
+        cbChecked = fragmentView.findViewById(R.id.cb_checked);
 
         setTitle(getResources().getString(R.string.task_title_add));
         taskTitle.setText(R.string.task_title_add);
@@ -42,8 +47,10 @@ public class AddTaskFragment extends BaseFragment<AddTaskActivity, AddTaskContra
 
     private void onClickSave() {
         String name = tietTaskName.getText().toString();
-        String time = tietTaskTime.getText().toString();
-        presenter.saveData(new Task(null, name, time));
+        String description = tietTaskDescription.getText().toString();
+        String date = tietTaskDate.getText().toString();
+        Boolean checked = cbChecked.isChecked();
+        presenter.saveData(new Task(null, name, description, date, checked));
     }
 
     @Override

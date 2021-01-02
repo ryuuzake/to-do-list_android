@@ -12,7 +12,7 @@ public interface EditTaskContract {
     }
 
     interface Presenter extends BasePresenter {
-        void saveData(String name, String time);
+        void saveData(Task task);
 
         void loadData(String id);
 

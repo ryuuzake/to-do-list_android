@@ -25,4 +25,6 @@
     <string name="task_delete_button">DELETE</string>
 
     <string name="server_client_id">876061370062-bpcj417v35d97er85g05hscnt88ebt7a.apps.googleusercontent.com</string>
+    <string name="task_description_hint">Enter Description</string>
+    <string name="task_completed_hint">Completed</string>
 </resources>

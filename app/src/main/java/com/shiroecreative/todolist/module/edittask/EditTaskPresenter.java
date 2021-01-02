@@ -21,8 +21,8 @@ public class EditTaskPresenter implements EditTaskContract.Presenter {
     }
 
     @Override
-    public void saveData(String name, String time) {
-        Task task = new Task(id, name, time);
+    public void saveData(Task task) {
+        task.setId(id);
         // Save new task
         repository.updateTask(task, new ViewRequestResponseListener<Task>(view) {
             @Override

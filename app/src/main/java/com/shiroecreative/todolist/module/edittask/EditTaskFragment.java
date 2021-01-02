@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,7 +19,9 @@ import com.shiroecreative.todolist.data.model.Task;
 public class EditTaskFragment extends BaseFragment<EditTaskActivity, EditTaskContract.Presenter> implements EditTaskContract.View {
 
     TextInputEditText tietTaskName;
-    TextInputEditText tietTaskTime;
+    TextInputEditText tietTaskDescription;
+    private TextInputEditText tietTaskDate;
+    private CheckBox cbChecked;
 
     @Nullable
     @Override
@@ -30,7 +33,9 @@ public class EditTaskFragment extends BaseFragment<EditTaskActivity, EditTaskCon
         final Button btnEditTask = fragmentView.findViewById(R.id.btn_edit_task);
         final Button btnDeleteTask = fragmentView.findViewById(R.id.btn_delete_task);
         tietTaskName = fragmentView.findViewById(R.id.tiet_task_name);
-        tietTaskTime = fragmentView.findViewById(R.id.tiet_task_time);
+        tietTaskDescription = fragmentView.findViewById(R.id.tiet_task_description);
+        tietTaskDate = fragmentView.findViewById(R.id.tiet_task_date);
+        cbChecked = fragmentView.findViewById(R.id.cb_checked);
 
         setTitle(getResources().getString(R.string.task_title_edit));
         taskTitle.setText(R.string.task_title_edit);
@@ -46,8 +51,10 @@ public class EditTaskFragment extends BaseFragment<EditTaskActivity, EditTaskCon
 
     private void setBtnEditClick() {
         String name = tietTaskName.getText().toString();
-        String time = tietTaskTime.getText().toString();
-        presenter.saveData(name, time);
+        String description = tietTaskDescription.getText().toString();
+        String date = tietTaskDate.getText().toString();
+        Boolean checked = cbChecked.isChecked();
+        presenter.saveData(new Task(null, name, description, date, checked));
     }
 
     private void setBtnDeleteClick() {
@@ -67,6 +74,8 @@ public class EditTaskFragment extends BaseFragment<EditTaskActivity, EditTaskCon
     @Override
     public void showData(Task task) {
         tietTaskName.setText(task.getTitle());
-        tietTaskTime.setText(task.getDescription());
+        tietTaskDescription.setText(task.getDescription());
+        tietTaskDate.setText(task.getDate());
+        cbChecked.setChecked(task.getChecked());
     }
 }
