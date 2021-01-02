@@ -7,7 +7,7 @@ import com.shiroecreative.todolist.data.request_response.RegisterGoogleRequest;
 import com.shiroecreative.todolist.data.request_response.RegisterRequest;
 import com.shiroecreative.todolist.data.request_response.VerifyRequest;
 import com.shiroecreative.todolist.utils.RequestResponseListener;
-import com.shiroecreative.todolist.utils.ResponseConverter;
+import com.shiroecreative.todolist.utils.UserUtil;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -58,7 +58,7 @@ public class UserRemoteRepositoryImpl extends RemoteRepository<UserEndpoint> imp
                 if (response.body() != null) {
                     T t = response.body();
                     if (t instanceof LoginResponse) {
-                        listener.onSuccess((U) ResponseConverter.fromLoginResponse((LoginResponse) t));
+                        listener.onSuccess((U) UserUtil.fromLoginResponse((LoginResponse) t));
                     } else {
                         listener.onSuccess((U) Boolean.TRUE);
                     }

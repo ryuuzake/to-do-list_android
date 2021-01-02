@@ -15,7 +15,10 @@ public class LoginRequest {
     @Expose
     private String password;
 
-    public LoginRequest() {
+    public LoginRequest(String email, String password) {
+        super();
+        this.email = email;
+        this.password = password;
     }
 
     public LoginRequest(String email, String username, String password) {

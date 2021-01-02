@@ -3,11 +3,14 @@ package com.shiroecreative.todolist.module.home;
 import com.shiroecreative.todolist.base.BasePresenter;
 import com.shiroecreative.todolist.base.BaseView;
 import com.shiroecreative.todolist.data.model.Task;
+import com.shiroecreative.todolist.data.model.User;
 
 import java.util.List;
 
 public interface HomeContract {
     interface View extends BaseView<Presenter> {
+        void showUser(User user);
+
         void showTasks(List<Task> tasks);
 
         void sendToAddTask();
@@ -25,6 +28,8 @@ public interface HomeContract {
         void getTasks();
 
         void checkedTask(Task task);
+
+        void getUser();
 
         void logout();
     }

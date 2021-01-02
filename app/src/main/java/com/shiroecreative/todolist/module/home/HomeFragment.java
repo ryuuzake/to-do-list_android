@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +20,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.shiroecreative.todolist.R;
 import com.shiroecreative.todolist.base.BaseFragment;
 import com.shiroecreative.todolist.data.model.Task;
+import com.shiroecreative.todolist.data.model.User;
 import com.shiroecreative.todolist.module.addtask.AddTaskActivity;
 import com.shiroecreative.todolist.module.edittask.EditTaskActivity;
 import com.shiroecreative.todolist.module.login.LoginActivity;
@@ -34,6 +36,7 @@ public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presen
 
     private RecyclerViewAdapterTodoList[] adapterTodoList;
     private int viewPagerPosition = 0;
+    private TextView tvGreeting;
 
     @Nullable
     @Override
@@ -45,6 +48,7 @@ public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presen
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        tvGreeting = fragmentView.findViewById(R.id.tv_greeting);
         FloatingActionButton btnTaskAdd = fragmentView.findViewById(R.id.btn_task_add);
         btnTaskAdd.setOnClickListener(v -> presenter.addTask());
         activity.btnLogout.setOnClickListener(v -> presenter.logout());
@@ -105,12 +109,17 @@ public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presen
     @Override
     public void onResume() {
         super.onResume();
-        presenter.getTasks();
+        presenter.start();
     }
 
     @Override
     public void setPresenter(HomeContract.Presenter presenter) {
         this.presenter = presenter;
+    }
+
+    @Override
+    public void showUser(User user) {
+        tvGreeting.setText(String.format("Hello, %s", user.getUsername()));
     }
 
     @Override

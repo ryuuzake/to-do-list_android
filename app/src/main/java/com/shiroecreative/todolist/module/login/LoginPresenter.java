@@ -20,7 +20,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void performLogin(String email, String pass) {
-        repository.login(new LoginRequest(email, email, pass), new ViewRequestResponseListener<User>(view) {
+        repository.login(new LoginRequest(email, pass), new ViewRequestResponseListener<User>(view) {
             @Override
             public void onSuccess(User user) {
                 view.redirectToHome();

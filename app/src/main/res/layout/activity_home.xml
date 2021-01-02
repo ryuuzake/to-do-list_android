@@ -21,10 +21,21 @@
         android:focusable="true"
         android:src="@drawable/ic_add" />
 
+    <TextView
+        android:id="@+id/tv_greeting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        tools:text="Hello, Ichigo" />
+
     <EditText
         android:id="@+id/task_search_editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/tv_greeting"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"

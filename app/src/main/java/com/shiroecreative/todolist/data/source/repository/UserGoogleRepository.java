@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.Task;
 import com.shiroecreative.todolist.R;
 import com.shiroecreative.todolist.data.model.User;
 import com.shiroecreative.todolist.utils.RequestResponseListener;
+import com.shiroecreative.todolist.utils.UserUtil;
 
 public class UserGoogleRepository {
     private final Context context;
@@ -34,9 +35,7 @@ public class UserGoogleRepository {
         final GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(context);
         // Need a slim down version
         if (account != null) {
-            final User user = new User();
-            user.setEmail(account.getEmail());
-            return user;
+            return UserUtil.fromGoogleResponse(account);
         }
         return null;
     }

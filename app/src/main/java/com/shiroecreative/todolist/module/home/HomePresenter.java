@@ -21,7 +21,8 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void start() {
-
+        getTasks();
+        getUser();
     }
 
     @Override
@@ -57,6 +58,11 @@ public class HomePresenter implements HomeContract.Presenter {
                 getTasks();
             }
         });
+    }
+
+    @Override
+    public void getUser() {
+        view.showUser(userRepository.getUser());
     }
 
     @Override
