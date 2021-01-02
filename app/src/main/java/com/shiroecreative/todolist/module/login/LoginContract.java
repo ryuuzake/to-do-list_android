@@ -7,6 +7,8 @@ import com.shiroecreative.todolist.base.BaseView;
 
 public interface LoginContract {
     interface View extends BaseView<Presenter> {
+        void signInGoogle();
+
         void redirectToHome();
     }
 

@@ -13,6 +13,8 @@ public interface HomeContract {
         void sendToAddTask();
 
         void sendToEditTask(String id);
+
+        void sendToLogin();
     }
 
     interface Presenter extends BasePresenter {
@@ -23,5 +25,7 @@ public interface HomeContract {
         void getTasks();
 
         void checkedTask(Task task);
+
+        void logout();
     }
 }

@@ -46,16 +46,21 @@ public class LoginPresenter implements LoginContract.Presenter {
     @Override
     public void start() {
         final User user = repository.getUser();
-        if (user != null && user.getToken() != null) {
-            repository.checkToken(
-                    new VerifyRequest(user.getToken()),
-                    new ViewRequestResponseListener<Boolean>(view) {
-                        @Override
-                        public void onSuccess(Boolean isValid) {
-                            view.redirectToHome();
+        if (user != null) {
+            if (user.getToken() != null) {
+                repository.checkToken(
+                        new VerifyRequest(user.getToken()),
+                        new ViewRequestResponseListener<Boolean>(view) {
+                            @Override
+                            public void onSuccess(Boolean isValid) {
+                                view.redirectToHome();
+                            }
                         }
-                    }
-            );
+                );
+            } else {
+                // Try Sign In with Google
+                view.signInGoogle();
+            }
         }
     }
 }

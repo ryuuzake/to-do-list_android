@@ -38,14 +38,15 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
         btnGoogleLogin = fragmentView.findViewById(R.id.sign_in_button);
         btnGoogleLogin.setSize(SignInButton.SIZE_WIDE);
         btnLogin.setOnClickListener(this::setBtnLoginClick);
-        btnGoogleLogin.setOnClickListener(this::setBtnGoogleClick);
+        btnGoogleLogin.setOnClickListener(v -> this.signInGoogle());
 
         setTitle(getResources().getString(R.string.login_title));
 
         return fragmentView;
     }
 
-    private void setBtnGoogleClick(View view) {
+    @Override
+    public void signInGoogle() {
         Intent intent = presenter.getSignInIntent();
         startActivityForResult(intent, RC_SIGN_IN);
     }

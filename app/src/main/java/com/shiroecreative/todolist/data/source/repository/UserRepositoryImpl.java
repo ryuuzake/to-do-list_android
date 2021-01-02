@@ -102,4 +102,11 @@ public class UserRepositoryImpl implements UserRepository {
             }
         });
     }
+
+    @Override
+    public void logout(RequestResponseListener<Void> listener) {
+        sessionRepository.destroy();
+        googleRepository.handleSignOut(listener);
+        listener.onSuccess(null);
+    }
 }

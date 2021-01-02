@@ -13,4 +13,6 @@ public interface UserRepository extends UserRemoteRepository {
     Intent getGoogleSignInIntent();
 
     void handleSignInResult(Intent intent, RequestResponseListener<User> listener);
+
+    void logout(RequestResponseListener<Void> listener);
 }

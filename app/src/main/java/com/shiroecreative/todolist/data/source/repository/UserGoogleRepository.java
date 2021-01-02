@@ -45,6 +45,10 @@ public class UserGoogleRepository {
         return googleSignInClient.getSignInIntent();
     }
 
+    public void handleSignOut(RequestResponseListener<Void> listener) {
+        googleSignInClient.signOut().addOnCompleteListener(task -> listener.onSuccess(null));
+    }
+
     public void handleSignInResult(Intent intent, RequestResponseListener<GoogleSignInAccount> listener) {
         // The Task returned from this call is always completed, no need to attach
         // a listener.

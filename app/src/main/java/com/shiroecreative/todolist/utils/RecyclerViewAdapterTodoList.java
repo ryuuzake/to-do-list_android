@@ -37,6 +37,7 @@ public class RecyclerViewAdapterTodoList extends RecyclerView.Adapter<RecyclerVi
         holder.task = taskListFiltered.get(position);
         holder.tvTaskName.setText(holder.task.getTitle());
         holder.tvTaskTime.setText(holder.task.getDescription());
+        holder.cbTask.setChecked(holder.task.getChecked());
         holder.itemView.setOnClickListener(view -> todoListClickListener.onTaskClick(holder.task));
         holder.cbTask.setOnClickListener(view -> todoListClickListener.onTaskCheckBoxClick(holder.task));
         holder.itemView.setOnLongClickListener(view -> todoListClickListener.onTaskLongClick(holder.task));

@@ -20,6 +20,7 @@ import com.shiroecreative.todolist.base.BaseFragment;
 import com.shiroecreative.todolist.data.model.Task;
 import com.shiroecreative.todolist.module.addtask.AddTaskActivity;
 import com.shiroecreative.todolist.module.edittask.EditTaskActivity;
+import com.shiroecreative.todolist.module.login.LoginActivity;
 import com.shiroecreative.todolist.utils.RecyclerViewAdapterTodoList;
 import com.shiroecreative.todolist.utils.TaskUtil;
 
@@ -42,6 +43,7 @@ public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presen
 
         btnTaskAdd = fragmentView.findViewById(R.id.btn_task_add);
         btnTaskAdd.setOnClickListener(view -> presenter.addTask());
+        activity.btnLogout.setOnClickListener(v -> presenter.logout());
         createRecyclerView();
         createSearchBar();
         presenter.getTasks();
@@ -130,5 +132,11 @@ public class HomeFragment extends BaseFragment<HomeActivity, HomeContract.Presen
         Intent intent = new Intent(activity, EditTaskActivity.class);
         intent.putExtra(TASK_ID, id);
         startActivity(intent);
+    }
+
+    @Override
+    public void sendToLogin() {
+        startActivity(new Intent(activity, LoginActivity.class));
+        activity.finish();
     }
 }

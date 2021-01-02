@@ -13,6 +13,7 @@ public abstract class BaseFragmentHolderActivity extends BaseActivity {
     protected FrameLayout flFragmentContainer;
     protected RelativeLayout rlActivityFragmentHolder;
     protected ImageButton btnBack;
+    public ImageButton btnLogout;
 
     @Override
     protected void initializeView() {
@@ -21,6 +22,7 @@ public abstract class BaseFragmentHolderActivity extends BaseActivity {
         flFragmentContainer = findViewById(R.id.fl_fragment_container);
         rlActivityFragmentHolder = findViewById(R.id.rl_activity_fragment_holder);
         btnBack = findViewById(R.id.btn_back);
+        btnLogout = findViewById(R.id.btn_logout);
 
         btnBack.setOnClickListener(view -> super.onBackPressed());
     }

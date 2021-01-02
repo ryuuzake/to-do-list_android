@@ -2,6 +2,7 @@ package com.shiroecreative.todolist.module.home;
 
 import com.shiroecreative.todolist.data.model.Task;
 import com.shiroecreative.todolist.data.source.repository.TaskRepository;
+import com.shiroecreative.todolist.data.source.repository.UserRepository;
 import com.shiroecreative.todolist.utils.ViewRequestResponseListener;
 
 import java.util.List;
@@ -9,10 +10,12 @@ import java.util.List;
 public class HomePresenter implements HomeContract.Presenter {
 
     private final HomeContract.View view;
+    private final UserRepository userRepository;
     private final TaskRepository repository;
 
-    public HomePresenter(HomeContract.View view, TaskRepository repository) {
+    public HomePresenter(HomeContract.View view, TaskRepository repository, UserRepository userRepository) {
         this.view = view;
+        this.userRepository = userRepository;
         this.repository = repository;
     }
 
@@ -52,6 +55,16 @@ public class HomePresenter implements HomeContract.Presenter {
             public void onSuccess(Task task) {
                 // Refresh List
                 getTasks();
+            }
+        });
+    }
+
+    @Override
+    public void logout() {
+        userRepository.logout(new ViewRequestResponseListener<Void>(view) {
+            @Override
+            public void onSuccess(Void aVoid) {
+                view.sendToLogin();
             }
         });
     }
