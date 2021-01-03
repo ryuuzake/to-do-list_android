@@ -1,28 +1,22 @@
 package com.shiroecreative.todolist.module.addtask;
 
+import com.shiroecreative.todolist.base.AppContainer;
+import com.shiroecreative.todolist.base.BaseApplication;
 import com.shiroecreative.todolist.base.BaseFragmentHolderActivity;
-import com.shiroecreative.todolist.data.source.local.TaskTableHandler;
-import com.shiroecreative.todolist.data.source.remote.TaskRemoteRepository;
-import com.shiroecreative.todolist.data.source.repository.TaskRepositoryImpl;
-import com.shiroecreative.todolist.data.source.session.UserSessionRepository;
 
 public class AddTaskActivity extends BaseFragmentHolderActivity {
 
-    AddTaskFragment addTaskFragment;
-
     @Override
     protected void initializeFragment() {
-        initializeView();
+        final AddTaskFragment fragment = new AddTaskFragment();
+        final AppContainer appContainer = ((BaseApplication) getApplication()).appContainer;
 
-        addTaskFragment = new AddTaskFragment();
-        AddTaskPresenter presenter = new AddTaskPresenter(addTaskFragment,
-                new TaskRepositoryImpl(
-                        new TaskTableHandler(this),
-                        new TaskRemoteRepository(new UserSessionRepository(this).getSessionData().getToken())
-                )
+        AddTaskPresenter presenter = new AddTaskPresenter(
+                fragment,
+                appContainer.getTaskRepository(this)
         );
-        addTaskFragment.setPresenter(presenter);
+        fragment.setPresenter(presenter);
 
-        setCurrentFragment(addTaskFragment, true);
+        setCurrentFragment(fragment, true);
     }
 }

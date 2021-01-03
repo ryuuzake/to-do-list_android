@@ -2,18 +2,11 @@ package com.shiroecreative.todolist.module.home;
 
 import android.view.View;
 
+import com.shiroecreative.todolist.base.AppContainer;
+import com.shiroecreative.todolist.base.BaseApplication;
 import com.shiroecreative.todolist.base.BaseFragmentHolderActivity;
-import com.shiroecreative.todolist.data.source.local.TaskTableHandler;
-import com.shiroecreative.todolist.data.source.remote.TaskRemoteRepository;
-import com.shiroecreative.todolist.data.source.remote.UserRemoteRepositoryImpl;
-import com.shiroecreative.todolist.data.source.repository.TaskRepositoryImpl;
-import com.shiroecreative.todolist.data.source.repository.UserGoogleRepository;
-import com.shiroecreative.todolist.data.source.repository.UserRepositoryImpl;
-import com.shiroecreative.todolist.data.source.session.UserSessionRepository;
 
 public class HomeActivity extends BaseFragmentHolderActivity {
-
-    HomeFragment homeFragment;
 
     @Override
     protected void initializeView() {
@@ -25,13 +18,17 @@ public class HomeActivity extends BaseFragmentHolderActivity {
 
     @Override
     protected void initializeFragment() {
-        homeFragment = new HomeFragment();
-        HomePresenter presenter = new HomePresenter(homeFragment, new TaskRepositoryImpl(
-                new TaskTableHandler(this),
-                new TaskRemoteRepository(new UserSessionRepository(this).getSessionData().getToken())
-        ), new UserRepositoryImpl(new UserSessionRepository(this), new UserRemoteRepositoryImpl(), new UserGoogleRepository(this)));
-        homeFragment.setPresenter(presenter);
-        setCurrentFragment(homeFragment, false);
+        final HomeFragment fragment = new HomeFragment();
+        final AppContainer appContainer = ((BaseApplication) getApplication()).appContainer;
+
+        HomePresenter presenter = new HomePresenter(
+                fragment,
+                appContainer.getTaskRepository(this),
+                appContainer.getUserRepository(this)
+        );
+
+        fragment.setPresenter(presenter);
+        setCurrentFragment(fragment, false);
     }
 
 }

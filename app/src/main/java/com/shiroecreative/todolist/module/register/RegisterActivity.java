@@ -1,22 +1,18 @@
 package com.shiroecreative.todolist.module.register;
 
+import com.shiroecreative.todolist.base.AppContainer;
+import com.shiroecreative.todolist.base.BaseApplication;
 import com.shiroecreative.todolist.base.BaseFragmentHolderActivity;
-import com.shiroecreative.todolist.data.source.remote.UserRemoteRepositoryImpl;
-import com.shiroecreative.todolist.data.source.repository.UserGoogleRepository;
-import com.shiroecreative.todolist.data.source.repository.UserRepositoryImpl;
-import com.shiroecreative.todolist.data.source.session.UserSessionRepository;
 
 public class RegisterActivity extends BaseFragmentHolderActivity {
     @Override
     protected void initializeFragment() {
         final RegisterFragment fragment = new RegisterFragment();
+        final AppContainer appContainer = ((BaseApplication) getApplication()).appContainer;
+
         fragment.setPresenter(new RegisterPresenter(
                 fragment,
-                new UserRepositoryImpl(
-                        new UserSessionRepository(this),
-                        new UserRemoteRepositoryImpl(),
-                        new UserGoogleRepository(this)
-                )
+                appContainer.getUserRepository(this)
         ));
         setCurrentFragment(fragment, true);
     }
