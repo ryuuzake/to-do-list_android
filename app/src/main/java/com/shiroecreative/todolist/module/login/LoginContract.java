@@ -10,6 +10,8 @@ public interface LoginContract {
         void signInGoogle();
 
         void redirectToHome();
+
+        void redirectToRegister();
     }
 
     interface Presenter extends BasePresenter {

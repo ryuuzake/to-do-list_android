@@ -5,12 +5,12 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv_login_title"
+        android:id="@+id/tv_register_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:gravity="center"
-        android:text="@string/login_title"
+        android:text="@string/register_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -19,6 +19,22 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="16dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/username_hint" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_email"
@@ -32,7 +48,10 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp">
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_password"
@@ -40,13 +59,30 @@
             android:layout_height="wrap_content"
             android:hint="@string/password_hint"
             android:inputType="textPassword|textWebPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_confirm_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/confirm_password_hint"
+            android:inputType="textPassword|textWebPassword" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_margin="16dp"
         android:orientation="horizontal">
 
         <TextView
@@ -55,30 +91,24 @@
             android:layout_weight="1"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text="@string/register_help_text"
+            android:text="@string/login_help_text"
             android:textAlignment="textEnd" />
 
         <TextView
-            android:id="@+id/tv_register_click"
+            android:id="@+id/tv_login_click"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/register_text_click"
+            android:text="@string/login_text_click"
             android:textColor="@android:color/holo_blue_dark" />
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="@string/login_title" />
+        android:text="@string/register_title" />
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp" />
 </LinearLayout>

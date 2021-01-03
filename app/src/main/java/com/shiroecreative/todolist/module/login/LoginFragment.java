@@ -15,6 +15,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.shiroecreative.todolist.R;
 import com.shiroecreative.todolist.base.BaseFragment;
 import com.shiroecreative.todolist.module.home.HomeActivity;
+import com.shiroecreative.todolist.module.register.RegisterActivity;
 
 public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Presenter> implements LoginContract.View {
 
@@ -23,6 +24,7 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
     private TextInputEditText etEmail;
     private TextInputEditText etPassword;
     private Button btnLogin;
+    private View tvRegisterClick;
     private SignInButton btnGoogleLogin;
 
     @Nullable
@@ -30,19 +32,26 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         fragmentView = inflater.inflate(R.layout.activity_login, container, false);
-        presenter.start();
 
         etEmail = fragmentView.findViewById(R.id.et_email);
         etPassword = fragmentView.findViewById(R.id.et_password);
         btnLogin = fragmentView.findViewById(R.id.btn_login);
         btnGoogleLogin = fragmentView.findViewById(R.id.sign_in_button);
+        tvRegisterClick = fragmentView.findViewById(R.id.tv_register_click);
         btnGoogleLogin.setSize(SignInButton.SIZE_WIDE);
         btnLogin.setOnClickListener(this::setBtnLoginClick);
         btnGoogleLogin.setOnClickListener(v -> this.signInGoogle());
+        tvRegisterClick.setOnClickListener(v -> redirectToRegister());
 
         setTitle(getResources().getString(R.string.login_title));
 
         return fragmentView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.start();
     }
 
     @Override
@@ -71,6 +80,12 @@ public class LoginFragment extends BaseFragment<LoginActivity, LoginContract.Pre
         Intent intent = new Intent(activity, HomeActivity.class);
         startActivity(intent);
         activity.finish();
+    }
+
+    @Override
+    public void redirectToRegister() {
+        Intent intent = new Intent(activity, RegisterActivity.class);
+        startActivity(intent);
     }
 
     @Override

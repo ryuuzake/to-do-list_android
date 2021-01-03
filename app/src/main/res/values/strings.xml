@@ -2,9 +2,11 @@
     <string name="app_name">To Do List</string>
 
     <string name="login_title">Login</string>
+    <string name="register_title">Register</string>
 
     <string name="email_hint">E - Mail</string>
     <string name="password_hint">Password</string>
+    <string name="confirm_password_hint">Completed Password</string>
     <string name="profile_title">Profile</string>
 
     <string name="search_task">Search Task</string>
@@ -27,4 +29,9 @@
     <string name="server_client_id">876061370062-bpcj417v35d97er85g05hscnt88ebt7a.apps.googleusercontent.com</string>
     <string name="task_description_hint">Enter Description</string>
     <string name="task_completed_hint">Completed</string>
+    <string name="username_hint">Username</string>
+    <string name="register_help_text">Don\'t have account?</string>
+    <string name="register_text_click">Create an account</string>
+    <string name="login_help_text">Already have an account?</string>
+    <string name="login_text_click">Login to account</string>
 </resources>

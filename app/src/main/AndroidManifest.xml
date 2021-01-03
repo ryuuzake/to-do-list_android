@@ -21,6 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".module.register.RegisterActivity" />
         <activity android:name=".module.home.HomeActivity" />
         <activity android:name=".module.addtask.AddTaskActivity" />
         <activity android:name=".module.edittask.EditTaskActivity" />
